@@ -17,9 +17,16 @@ class AuthController extends Controller
 
       $user = User::create([
          "name" => $fields["name"],
-         "name" => $fields["name"],
-         "name" => $fields["name"],
-         "name" => $fields["name"]
+         "email" => $fields["email"],
+         "password" => bcrypt($fields["password"]),
       ]);
+
+      $token = $user->createToken("myapptoken")->plainTextToken;
+
+      $response = [
+         "user" => $user,
+         "token" => $token
+      ];
+      return response($response, 201);
    }
 }
